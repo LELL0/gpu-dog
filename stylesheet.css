@@ -1,0 +1,15 @@
+.gpucat-menu {
+    spacing: .5em;
+}
+
+.gpucat-menu__icon {
+	padding: 0;
+    icon-size: 2em;
+    -st-icon-style: symbolic;
+    color: #76b900;
+}
+
+.gpucat-menu__label {
+    font-size: .9em;
+    line-height: 1;
+}
