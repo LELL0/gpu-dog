@@ -143,7 +143,7 @@ Sergei Kolesnikov (RunCat) https://kolesnikov.se/</property>
         <property name="comments" translatable="yes">The cat tells you the GPU usage by running speed. Fork of GNOME RunCat.</property>
         <property name="copyright">© 2020-2026 Sergei Kolesnikov; GPU fork © 2026 LELL0</property>
         <property name="license_type">gpl-3-0</property>
-        <property name="website">https://github.com/LELL0/gpu-cat</property>
+        <property name="website">https://github.com/LELL0/gpu-dog</property>
         <property name="website_label" translatable="yes">Visit GPU Dog on GitHub</property>
         <property name="can-focus">False</property>
         <property name="hide-on-close">True</property>
