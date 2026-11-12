@@ -8,7 +8,7 @@ import { resolveColor } from './utils.js'
 
 
 Gio._promisify(Gtk.UriLauncher.prototype, 'launch', 'launch_finish')
-export default class GpuCatPreferences extends ExtensionPreferences {
+export default class GpuDogPreferences extends ExtensionPreferences {
 	#settings = null
 	#builder = null
 	#window = null
@@ -41,7 +41,7 @@ export default class GpuCatPreferences extends ExtensionPreferences {
 
 		const page = this.#builder.get_object('preferences-general')
 		this.#window.add(page)
-		this.#window.title = _('GPU Cat Settings')
+		this.#window.title = _('GPU Dog Settings')
 		this.#window.connect('close-request', () => {
 			this.#settings = null
 			this.#builder = null

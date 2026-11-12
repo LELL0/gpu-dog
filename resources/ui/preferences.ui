@@ -14,7 +14,7 @@
                         <property name="title" translatable="yes">Displaying items</property>
                         <property name="model">
                             <object class="GtkStringList">
-                            	<!-- MUST USE THE SAME ORDER AS org.gnome.shell.extensions.gpu-cat.DisplayingItems -->
+                            	<!-- MUST USE THE SAME ORDER AS org.gnome.shell.extensions.gpu-dog.DisplayingItems -->
                                 <items>
                                     <item translatable="yes">Character and percentage</item>
                                     <item translatable="yes">Percentage only</item>
@@ -50,7 +50,7 @@
                         <property name="title" translatable="yes">Character</property>
                         <property name="model">
                             <object class="GtkStringList">
-                                <!-- MUST USE THE SAME ORDER AS org.gnome.shell.extensions.gpu-cat.Character -->
+                                <!-- MUST USE THE SAME ORDER AS org.gnome.shell.extensions.gpu-dog.Character -->
                                 <items>
                                     <item translatable="yes">Cat</item>
                                     <item translatable="yes">Dog</item>
@@ -107,7 +107,7 @@
         <child>
             <object class="AdwPreferencesGroup">
                 <property name="title" translatable="yes">Reset preferences</property>
-                <property name="description" translatable="yes">Reset GPU Cat preferences to defaults</property>
+                <property name="description" translatable="yes">Reset GPU Dog preferences to defaults</property>
                 <property name="header-suffix">
                     <object class="GtkButton" id="reset">
                         <property name="halign">start</property>
@@ -136,15 +136,15 @@
     </object>
 
     <object class="GtkAboutDialog" id="about-dialog">
-        <property name="program-name">GPU Cat</property>
-        <property name="authors">LELL0 (GPU Cat) https://github.com/LELL0
+        <property name="program-name">GPU Dog</property>
+        <property name="authors">LELL0 (GPU Dog) https://github.com/LELL0
 Sergei Kolesnikov (RunCat) https://kolesnikov.se/</property>
         <property name="artists">Sergei Kolesnikov, Takuto Nakamura</property>
         <property name="comments" translatable="yes">The cat tells you the GPU usage by running speed. Fork of GNOME RunCat.</property>
         <property name="copyright">© 2020-2026 Sergei Kolesnikov; GPU fork © 2026 LELL0</property>
         <property name="license_type">gpl-3-0</property>
         <property name="website">https://github.com/LELL0/gpu-cat</property>
-        <property name="website_label" translatable="yes">Visit GPU Cat on GitHub</property>
+        <property name="website_label" translatable="yes">Visit GPU Dog on GitHub</property>
         <property name="can-focus">False</property>
         <property name="hide-on-close">True</property>
         <property name="modal">True</property>
@@ -158,7 +158,7 @@ Sergei Kolesnikov (RunCat) https://kolesnikov.se/</property>
                 <attribute name="action">prefs.homepage</attribute>
             </item>
             <item>
-                <attribute name="label" translatable="yes">About GPU Cat</attribute>
+                <attribute name="label" translatable="yes">About GPU Dog</attribute>
                 <attribute name="action">prefs.about</attribute>
             </item>
         </section>

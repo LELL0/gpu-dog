@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// GPU utilization reader shared by GPU Cat and the local Vitals patch.
+// GPU utilization reader shared by GPU Dog and the local Vitals patch.
 //
 // Supported sources (all unprivileged):
 //   Intel i915 : 1 - delta(gt0/rc6_residency_ms) / delta(t)

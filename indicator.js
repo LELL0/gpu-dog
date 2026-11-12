@@ -14,10 +14,10 @@ import { formatNumber, getSpritesPack, resolveColor } from './utils.js'
 import createCpuGenerator, { MAX_CPU_UTILIZATION } from './dataProviders/gpu.js'
 
 
-export default class GpuCatIndicator extends PanelMenu.Button {
+export default class GpuDogIndicator extends PanelMenu.Button {
 	static {
 		GObject.registerClass({
-			GTypeName: 'GpuCatIndicator',
+			GTypeName: 'GpuDogIndicator',
 			Properties: {
 				cpuUsage: GObject.ParamSpec.float('cpuUsage', 'GPU usage', 'Latest GPU utilization in [0, 1], sampled every 3 seconds', GObject.ParamFlags.READWRITE | GObject.ParamFlags.CONSTRUCT, 0, 1, 0),
 				currentSpriteFrame: GObject.ParamSpec.object('currentSpriteFrame', 'Current sprite frame', 'Sprite currently displayed for the character state', GObject.ParamFlags.READWRITE | GObject.ParamFlags.CONSTRUCT, Gio.Icon),
@@ -40,7 +40,7 @@ export default class GpuCatIndicator extends PanelMenu.Button {
 	icon
 
 	constructor(extension) {
-		super(0.5, 'GpuCat', false)
+		super(0.5, 'GpuDog', false)
 		this.extension = extension
 		this.settings = extension.getSettings()
 		this.sprites = getSpritesPack(this.extension.path, this.settings.get_string(SettingsSchemaKeys.CHARACTER))
@@ -84,16 +84,16 @@ export default class GpuCatIndicator extends PanelMenu.Button {
 
 	initUi() {
 		const box = new St.BoxLayout({
-			styleClass: 'panel-status-menu-box gpucat-menu',
+			styleClass: 'panel-status-menu-box gpudog-menu',
 		})
 
 		const icon = new St.Icon({
-			styleClass: 'system-status-icon gpucat-menu__icon',
+			styleClass: 'system-status-icon gpudog-menu__icon',
 		})
 
 		const label = new St.Label({
 			text: '...',
-			styleClass: 'gpucat-menu__label',
+			styleClass: 'gpudog-menu__label',
 			xExpand: true,
 			yExpand: true,
 			xAlign: Clutter.ActorAlign.FILL,

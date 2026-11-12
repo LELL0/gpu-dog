@@ -1,4 +1,4 @@
-export const LOG_PREFIX = 'GpuCatExtension'
+export const LOG_PREFIX = 'GpuDogExtension'
 
 export const SYSTEM_MONITOR_COMMAND = 'gnome-system-monitor -r'
 

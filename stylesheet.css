@@ -1,14 +1,14 @@
-.gpucat-menu {
+.gpudog-menu {
     spacing: .5em;
 }
 
-.gpucat-menu__icon {
+.gpudog-menu__icon {
 	padding: 0;
     icon-size: 2em;
     -st-icon-style: symbolic;
 }
 
-.gpucat-menu__label {
+.gpudog-menu__label {
     font-size: .9em;
     line-height: 1;
 }

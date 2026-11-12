@@ -2,7 +2,7 @@ import Gio from 'gi://Gio'
 import { LOG_PREFIX, characterSpriteDirs } from './constants.js'
 
 
-export const getSpritesPack = (root, character = 'cat') => {
+export const getSpritesPack = (root, character = 'dog') => {
 	const dir = characterSpriteDirs[character] ?? characterSpriteDirs.cat
 
 	const loadState = (state) => {

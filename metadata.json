@@ -1,10 +1,10 @@
 {
-  "uuid": "gpu-cat@lell0.github.io",
-  "name": "GPU Cat",
-  "description": "A cat that runs faster the busier your GPU is.\n\nWorks with Intel (i915/xe), AMD (amdgpu) and NVIDIA (proprietary driver, via nvidia-smi). On hybrid laptops the discrete GPU is never woken: a GPU that is runtime-suspended is skipped and counted as idle.\n\nFork of RunCat by win0err (GPL-3.0).",
+  "uuid": "gpu-dog@lell0.github.io",
+  "name": "GPU Dog",
+  "description": "A dog that runs faster the busier your GPU is.\n\nWorks with Intel (i915/xe), AMD (amdgpu) and NVIDIA (proprietary driver, via nvidia-smi). On hybrid laptops the discrete GPU is never woken: a GPU that is runtime-suspended is skipped and counted as idle.\n\nFork of RunCat by win0err (GPL-3.0).",
   "shell-version": ["46", "47", "48"],
   "url": "https://github.com/LELL0/gpu-cat",
-  "settings-schema": "org.gnome.shell.extensions.gpu-cat",
-  "gettext-domain": "gpu-cat@lell0.github.io",
-  "version": 2
+  "settings-schema": "org.gnome.shell.extensions.gpu-dog",
+  "gettext-domain": "gpu-dog@lell0.github.io",
+  "version": 1
 }

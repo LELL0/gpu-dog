@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Generate the dog sprites for GPU Cat (resources/icons/dog/...).
+"""Generate the dog sprites for GPU Dog (resources/icons/dog/...).
 
 The dog is assembled from filled primitives (tapered capsules, circles,
 rotated ellipses). Every primitive is emitted as a <path> with a fill only:

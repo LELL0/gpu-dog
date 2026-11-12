@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-	<enum id="org.gnome.shell.extensions.gpu-cat.DisplayingItems">
+	<enum id="org.gnome.shell.extensions.gpu-dog.DisplayingItems">
 		<value value="0" nick="character-and-percentage" />
 		<value value="1" nick="percentage-only" />
 		<value value="2" nick="character-only" />
 	</enum>
 
-	<enum id="org.gnome.shell.extensions.gpu-cat.Character">
+	<enum id="org.gnome.shell.extensions.gpu-dog.Character">
 		<value value="0" nick="cat" />
 		<value value="1" nick="dog" />
 	</enum>
 
 	<schema
-		id="org.gnome.shell.extensions.gpu-cat"
-		path="/org/gnome/shell/extensions/gpu-cat/"
+		id="org.gnome.shell.extensions.gpu-dog"
+		path="/org/gnome/shell/extensions/gpu-dog/"
 	>
 
 		<key type="i" name="idle-threshold">
@@ -21,7 +21,7 @@
 			<summary>Idle threshold</summary>
 		</key>
 
-		<key name="displaying-items" enum="org.gnome.shell.extensions.gpu-cat.DisplayingItems">
+		<key name="displaying-items" enum="org.gnome.shell.extensions.gpu-dog.DisplayingItems">
 			<default>'character-only'</default>
 			<summary>Displaying items</summary>
 		</key>
@@ -36,8 +36,8 @@
 			<summary>Smooth speed changes</summary>
 		</key>
 
-		<key name="character" enum="org.gnome.shell.extensions.gpu-cat.Character">
-			<default>'cat'</default>
+		<key name="character" enum="org.gnome.shell.extensions.gpu-dog.Character">
+			<default>'dog'</default>
 			<summary>Character</summary>
 			<description>Which animal runs in the panel</description>
 		</key>
