@@ -2,6 +2,9 @@ export const ANIMATION_SMOOTHING_TAU_MS = 500
 
 export const MAX_FRAME_DELTA_MS = 250
 
+// Idle (sleeping) sprites play at a fixed, slow pace: one breath per cycle.
+export const IDLE_ANIMATION_CYCLE_DURATION_MS = 4000
+
 export const getAnimationCycleDurationMs = cpuUtilization => Math.ceil(250 + 850 * (1 - cpuUtilization) ** 2)
 
 export const createAnimationTicker = (tauMs = ANIMATION_SMOOTHING_TAU_MS) => {
@@ -29,7 +32,9 @@ export const createAnimationTicker = (tauMs = ANIMATION_SMOOTHING_TAU_MS) => {
 			const dt = nowMs - lastTickMs
 			lastTickMs = nowMs
 
-			const stallThresholdMs = Math.max(MAX_FRAME_DELTA_MS, smoothedDurationMs / framesCount)
+			// 2x headroom: a timer firing a few ms late must not read as a stall,
+			// or slow cycles (frame time >= MAX_FRAME_DELTA_MS) would never advance
+			const stallThresholdMs = Math.max(MAX_FRAME_DELTA_MS, 2 * smoothedDurationMs / framesCount)
 
 			if (Number.isFinite(dt) && dt > 0 && dt <= stallThresholdMs && smoothedDurationMs > 0) {
 				const alpha = 1 - Math.exp(-dt / tauMs)

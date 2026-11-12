@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="388" height="388">
+    <title>GPU Dog: Frame 0</title>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 231.2,222.7 L 273.7,253.3 A 16.1,16.1 0 0 0 295.1,229.5 L 260.3,190.5 A 21.8,21.8 0 1 0 231.2,222.7 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 278.4,253.1 L 324.3,269.9 A 13.8,13.8 0 1 0 333.7,244 L 287.8,227.4 A 13.7,13.7 0 0 0 278.4,253.1 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 342.6,259.7 L 345.3,246.1 A 11.7,11.7 0 0 0 323.5,238.2 L 316.9,250.4 A 13.8,13.8 0 1 0 342.6,259.7 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 86.2,183 L 62.2,224 A 16.1,16.1 0 0 0 84.7,245.8 L 124.8,220.3 A 27.6,27.6 0 1 0 86.2,183 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 70.5,219.6 L 22.4,241 A 13.8,13.8 0 1 0 33.6,266.2 L 81.6,244.7 A 13.7,13.7 0 0 0 70.5,219.6 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 16.3,261 L 23.8,272.7 A 11.7,11.7 0 0 0 45,263.2 L 41.3,249.9 A 13.8,13.8 0 1 0 16.3,261 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 286,187 A 100,52 0 1 0 86,187 A 100,52 0 1 0 286,187 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 300,193 A 54,54 0 1 0 192,193 A 54,54 0 1 0 300,193 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 171,183 A 51,51 0 1 0 69,183 A 51,51 0 1 0 171,183 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 258,203 A 72,36 0 1 0 114,203 A 72,36 0 1 0 258,203 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 300.7,193.2 L 318.7,139.2 A 26,26 0 0 0 279.2,109.6 L 232.4,142 A 45,45 0 1 0 300.7,193.2 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 326,139 A 22,22 0 1 0 282,139 A 22,22 0 1 0 326,139 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 350,119 A 38,38 0 1 0 274,119 A 38,38 0 1 0 350,119 Z M 330.5,105 A 8.5,8.5 0 1 0 313.5,105 A 8.5,8.5 0 1 0 330.5,105 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 336.9,152.6 L 363.8,156.4 A 15.6,15.6 0 0 0 374.7,128.1 L 352.2,112.9 A 21.8,21.8 0 1 0 336.9,152.6 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 381,134 A 11,11 0 1 0 359,134 A 11,11 0 1 0 381,134 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 294.6,75.4 L 255.2,83.9 A 13,13 0 0 0 258.8,109.6 L 299,107 A 16,16 0 1 0 294.6,75.4 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 102.6,153.9 L 88.3,147.7 A 15.4,15.4 0 0 0 74.2,175 L 87.4,183.1 A 16.5,16.5 0 1 0 102.6,153.9 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 90.9,149.1 L 78.3,140.5 A 14.3,14.3 0 0 0 60.6,162.9 L 71.8,173.2 A 15.4,15.4 0 1 0 90.9,149.1 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 80.4,142.2 L 69.4,131.2 A 13.2,13.2 0 0 0 49.4,148.4 L 58.8,160.9 A 14.3,14.3 0 1 0 80.4,142.2 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 70.9,133 L 61.5,119.5 A 12.1,12.1 0 0 0 40.8,131.8 L 48.2,146.5 A 13.2,13.2 0 1 0 70.9,133 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 62.5,121.1 L 54.8,105.1 A 11,11 0 0 0 34.5,113.3 L 40.1,130.2 A 12.1,12.1 0 1 0 62.5,121.1 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 55.4,106.5 L 49.4,88 A 9.9,9.9 0 0 0 30.3,92.9 L 34.1,112 A 11,11 0 1 0 55.4,106.5 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 243.5,226.4 L 292.1,245.7 A 17.2,17.2 0 0 0 308.2,215.5 L 265,186 A 23,23 0 1 0 243.5,226.4 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 295.3,244 L 343.1,254.5 A 14.9,14.9 0 1 0 349.3,225.2 L 301.4,215.4 A 14.7,14.7 0 0 0 295.3,244 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 361.2,240.6 L 361.9,226.8 A 12.7,12.7 0 0 0 337.4,221.6 L 332.4,234.5 A 14.9,14.9 0 1 0 361.2,240.6 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 96.1,176.6 L 63.9,211.1 A 17.2,17.2 0 0 0 81.6,239.4 L 126.7,225.6 A 29.9,29.9 0 1 0 96.1,176.6 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 73.6,208.5 L 22,219.2 A 14.9,14.9 0 1 0 28.2,248.5 L 79.7,237.2 A 14.7,14.7 0 0 0 73.6,208.5 Z"/>
+    <path fill-rule="evenodd" style="fill:#bebebe;" d="M 11.1,239.3 L 16.1,252.1 A 12.7,12.7 0 0 0 40.7,246.9 L 40,233.1 A 14.9,14.9 0 1 0 11.1,239.3 Z"/>
+</svg>

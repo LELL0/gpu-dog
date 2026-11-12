@@ -46,6 +46,33 @@
                 <property name="title" translatable="yes">Character</property>
 
                 <child>
+                    <object class="AdwComboRow" id="character">
+                        <property name="title" translatable="yes">Character</property>
+                        <property name="model">
+                            <object class="GtkStringList">
+                                <!-- MUST USE THE SAME ORDER AS org.gnome.shell.extensions.gpu-cat.Character -->
+                                <items>
+                                    <item translatable="yes">Cat</item>
+                                    <item translatable="yes">Dog</item>
+                                </items>
+                            </object>
+                        </property>
+                    </object>
+                </child>
+
+                <child>
+                    <object class="AdwActionRow">
+                        <property name="title" translatable="yes">Color</property>
+                        <property name="activatable-widget">color-button</property>
+                        <child type="suffix">
+                            <object class="GtkColorDialogButton" id="color-button">
+                                <property name="valign">center</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+
+                <child>
                     <object class="AdwSwitchRow" id="invert-speed">
                         <property name="title" translatable="yes">Invert speed</property>
                     </object>

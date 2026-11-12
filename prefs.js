@@ -1,8 +1,10 @@
 import Adw from 'gi://Adw'
 import Gio from 'gi://Gio'
+import Gdk from 'gi://Gdk'
 import Gtk from 'gi://Gtk'
 import { ExtensionPreferences, gettext as _ } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js'
 import { SettingsSchemaKeys } from './constants.js'
+import { resolveColor } from './utils.js'
 
 
 Gio._promisify(Gtk.UriLauncher.prototype, 'launch', 'launch_finish')
@@ -52,6 +54,31 @@ export default class GpuCatPreferences extends ExtensionPreferences {
 		this.#settings.bind(SettingsSchemaKeys.INVERT_SPEED, this.#builder.get_object(SettingsSchemaKeys.INVERT_SPEED), 'active', Gio.SettingsBindFlags.DEFAULT)
 		this.#settings.bind(SettingsSchemaKeys.SMOOTH_SPEED_CHANGES, this.#builder.get_object(SettingsSchemaKeys.SMOOTH_SPEED_CHANGES), 'active', Gio.SettingsBindFlags.DEFAULT)
 
+		const characterRow = this.#builder.get_object(SettingsSchemaKeys.CHARACTER)
+		characterRow.set_selected(this.#settings.get_enum(SettingsSchemaKeys.CHARACTER))
+		characterRow.connect('notify::selected', ({ selected }) => {
+			this.#settings.set_enum(SettingsSchemaKeys.CHARACTER, selected)
+		})
+
+		const colorButton = this.#builder.get_object('color-button')
+		colorButton.set_dialog(new Gtk.ColorDialog({ withAlpha: false, modal: true }))
+		const loadColor = () => {
+			const rgba = new Gdk.RGBA()
+			if (rgba.parse(resolveColor(this.#settings.get_string(SettingsSchemaKeys.COLOR))) && !rgba.equal(colorButton.get_rgba()))
+				colorButton.set_rgba(rgba)
+		}
+		loadColor()
+		const colorChangedId = this.#settings.connect(`changed::${SettingsSchemaKeys.COLOR}`, loadColor)
+		this.#window.connect('close-request', () => this.#settings?.disconnect(colorChangedId))
+		colorButton.connect('notify::rgba', () => {
+			const { red, green, blue } = colorButton.get_rgba()
+			const hex = '#' + [red, green, blue].map(c => Math.round(c * 255).toString(16).padStart(2, '0')).join('')
+			// showing the auto color must not pin it as a custom one
+			if (hex === resolveColor(this.#settings.get_string(SettingsSchemaKeys.COLOR)))
+				return
+			this.#settings.set_string(SettingsSchemaKeys.COLOR, hex)
+		})
+
 		const combo = this.#builder.get_object(SettingsSchemaKeys.DISPLAYING_ITEMS)
 		combo.set_selected(this.#settings.get_enum(SettingsSchemaKeys.DISPLAYING_ITEMS))
 		combo.connect('notify::selected', ({ selected }) => {
@@ -67,6 +94,9 @@ export default class GpuCatPreferences extends ExtensionPreferences {
 			this.#settings.reset(SettingsSchemaKeys.CUSTOM_SYSTEM_MONITOR.ENABLED)
 			this.#settings.reset(SettingsSchemaKeys.CUSTOM_SYSTEM_MONITOR.COMMAND)
 			this.#settings.reset(SettingsSchemaKeys.DISPLAYING_ITEMS)
+			this.#settings.reset(SettingsSchemaKeys.COLOR)
+			this.#settings.reset(SettingsSchemaKeys.CHARACTER)
+			characterRow.set_selected(this.#settings.get_enum(SettingsSchemaKeys.CHARACTER))
 			combo.set_selected(this.#settings.get_enum(SettingsSchemaKeys.DISPLAYING_ITEMS))
 		})
 	}

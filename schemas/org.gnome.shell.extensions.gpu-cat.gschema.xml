@@ -6,6 +6,11 @@
 		<value value="2" nick="character-only" />
 	</enum>
 
+	<enum id="org.gnome.shell.extensions.gpu-cat.Character">
+		<value value="0" nick="cat" />
+		<value value="1" nick="dog" />
+	</enum>
+
 	<schema
 		id="org.gnome.shell.extensions.gpu-cat"
 		path="/org/gnome/shell/extensions/gpu-cat/"
@@ -29,6 +34,18 @@
 		<key name="smooth-speed-changes" type="b">
 			<default>true</default>
 			<summary>Smooth speed changes</summary>
+		</key>
+
+		<key name="character" enum="org.gnome.shell.extensions.gpu-cat.Character">
+			<default>'cat'</default>
+			<summary>Character</summary>
+			<description>Which animal runs in the panel</description>
+		</key>
+
+		<key name="color" type="s">
+			<default>''</default>
+			<summary>Character color</summary>
+			<description>CSS color of the character, e.g. '#76b900'. Empty: pick from the GPU vendor (NVIDIA green, AMD red, Intel blue).</description>
 		</key>
 
 		<key name="custom-system-monitor-enabled" type="b">

@@ -8,11 +8,19 @@ export const displayingItemNickToValue = {
 	'character-only': { character: true, percentage: false },
 }
 
+// character nick -> sprite folder under resources/icons/
+export const characterSpriteDirs = {
+	cat: 'runcat',
+	dog: 'dog',
+}
+
 export const SettingsSchemaKeys = {
 	IDLE_THRESHOLD: 'idle-threshold',
 	DISPLAYING_ITEMS: 'displaying-items',
 	INVERT_SPEED: 'invert-speed',
 	SMOOTH_SPEED_CHANGES: 'smooth-speed-changes',
+	COLOR: 'color',
+	CHARACTER: 'character',
 	CUSTOM_SYSTEM_MONITOR: {
 		ENABLED: 'custom-system-monitor-enabled',
 		COMMAND: 'custom-system-monitor-command',

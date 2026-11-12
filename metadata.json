@@ -6,5 +6,5 @@
   "url": "https://github.com/LELL0/gpu-cat",
   "settings-schema": "org.gnome.shell.extensions.gpu-cat",
   "gettext-domain": "gpu-cat@lell0.github.io",
-  "version": 1
+  "version": 2
 }

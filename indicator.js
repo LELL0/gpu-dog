@@ -9,8 +9,8 @@ import { trySpawnCommandLine } from 'resource:///org/gnome/shell/misc/util.js'
 import { PopupSeparatorMenuItem } from 'resource:///org/gnome/shell/ui/popupMenu.js'
 import { gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js'
 import { LOG_PREFIX, SYSTEM_MONITOR_COMMAND, displayingItemNickToValue, SettingsSchemaKeys, ReactiveProperties } from './constants.js'
-import { getAnimationCycleDurationMs, createAnimationTicker } from './math.js'
-import { formatNumber, getSpritesPack } from './utils.js'
+import { IDLE_ANIMATION_CYCLE_DURATION_MS, getAnimationCycleDurationMs, createAnimationTicker } from './math.js'
+import { formatNumber, getSpritesPack, resolveColor } from './utils.js'
 import createCpuGenerator, { MAX_CPU_UTILIZATION } from './dataProviders/gpu.js'
 
 
@@ -34,12 +34,16 @@ export default class GpuCatIndicator extends PanelMenu.Button {
 	animationTimeoutId = null
 	refreshDataTimeoutId
 	displayingItemsHandlerId
+	colorHandlerId
+	characterHandlerId
+	updateAnimationState = null
+	icon
 
 	constructor(extension) {
 		super(0.5, 'GpuCat', false)
 		this.extension = extension
 		this.settings = extension.getSettings()
-		this.sprites = getSpritesPack(this.extension.path)
+		this.sprites = getSpritesPack(this.extension.path, this.settings.get_string(SettingsSchemaKeys.CHARACTER))
 		this.initSettingsListeners()
 		this.initDataRefreshSource()
 		this.initUi()
@@ -100,6 +104,8 @@ export default class GpuCatIndicator extends PanelMenu.Button {
 		this.bind_property_full(ReactiveProperties.DISPLAYING_ITEMS, label, 'visible', GObject.BindingFlags.SYNC_CREATE, (_, { percentage }) => [true, percentage], null)
 		this.bind_property(ReactiveProperties.CURRENT_SPRITE_FRAME, icon, 'gicon', GObject.BindingFlags.DEFAULT)
 		this.bind_property_full(ReactiveProperties.DISPLAYING_ITEMS, icon, 'visible', GObject.BindingFlags.SYNC_CREATE, (_, { character }) => [true, character], null)
+		this.icon = icon
+		this.applyColor()
 		box.add_child(icon)
 		box.add_child(label)
 		this.add_child(box)
@@ -145,15 +151,25 @@ export default class GpuCatIndicator extends PanelMenu.Button {
 			return GLib.SOURCE_REMOVE
 		}
 
+		let lastState = null
+
 		const updateAnimationState = (immediate = false) => {
 			const utilization = this.isSpeedInverted
 				? MAX_CPU_UTILIZATION - this.cpuUsage
 				: this.cpuUsage
 
-			ticker.setTargetDuration(getAnimationCycleDurationMs(utilization), immediate)
+			// switching between running and sleeping jumps straight to the new pace
+			const state = this.characterState
+			const stateChanged = state !== lastState
+			lastState = state
+
+			const durationMs = state === 'idle'
+				? IDLE_ANIMATION_CYCLE_DURATION_MS
+				: getAnimationCycleDurationMs(utilization)
+			ticker.setTargetDuration(durationMs, immediate || stateChanged)
 
 			const shouldAnimate = this.displayingItems.character && this.frames.length > 1
-			const shouldRestart = immediate || this.animationTimeoutId === null
+			const shouldRestart = immediate || stateChanged || this.animationTimeoutId === null
 
 			if (!shouldAnimate) {
 				this.stopAnimation()
@@ -174,6 +190,7 @@ export default class GpuCatIndicator extends PanelMenu.Button {
 			this.connect(`notify::${prop}`, () => updateAnimationState(!this.isAnimationSmoothingEnabled || prop === ReactiveProperties.IS_SPEED_INVERTED))
 		}
 
+		this.updateAnimationState = updateAnimationState
 		updateAnimationState()
 	}
 
@@ -190,6 +207,11 @@ export default class GpuCatIndicator extends PanelMenu.Button {
 		}
 	}
 
+	applyColor() {
+		const color = resolveColor(this.settings.get_string(SettingsSchemaKeys.COLOR))
+		this.icon?.set_style(`color: ${color};`)
+	}
+
 	initSettingsListeners() {
 		this.settings.bind(SettingsSchemaKeys.INVERT_SPEED, this, ReactiveProperties.IS_SPEED_INVERTED, Gio.SettingsBindFlags.DEFAULT)
 		this.settings.bind(SettingsSchemaKeys.IDLE_THRESHOLD, this, ReactiveProperties.IDLE_THRESHOLD, Gio.SettingsBindFlags.DEFAULT)
@@ -201,11 +223,18 @@ export default class GpuCatIndicator extends PanelMenu.Button {
 
 		this.displayingItemsHandlerId = this.settings.connect(`changed::${SettingsSchemaKeys.DISPLAYING_ITEMS}`, updateDisplayingItems)
 		updateDisplayingItems()
+		this.colorHandlerId = this.settings.connect(`changed::${SettingsSchemaKeys.COLOR}`, () => this.applyColor())
+		this.characterHandlerId = this.settings.connect(`changed::${SettingsSchemaKeys.CHARACTER}`, () => {
+			this.sprites = getSpritesPack(this.extension.path, this.settings.get_string(SettingsSchemaKeys.CHARACTER))
+			this.updateAnimationState?.(true)
+		})
 	}
 
 	destroy() {
 		GLib.source_remove(this.refreshDataTimeoutId)
 		this.settings.disconnect(this.displayingItemsHandlerId)
+		this.settings.disconnect(this.colorHandlerId)
+		this.settings.disconnect(this.characterHandlerId)
 		this.stopAnimation()
 		super.destroy()
 	}
