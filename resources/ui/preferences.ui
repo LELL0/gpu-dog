@@ -61,9 +61,23 @@
                 </child>
 
                 <child>
-                    <object class="AdwActionRow">
+                    <object class="AdwActionRow" id="color-row">
                         <property name="title" translatable="yes">Color</property>
-                        <property name="activatable-widget">color-button</property>
+                        <child type="suffix">
+                            <object class="GtkLabel">
+                                <property name="label" translatable="yes">Auto</property>
+                                <property name="valign">center</property>
+                                <style>
+                                    <class name="dim-label"/>
+                                </style>
+                            </object>
+                        </child>
+                        <child type="suffix">
+                            <object class="GtkSwitch" id="color-auto">
+                                <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Follow the vendor of the busiest GPU (NVIDIA green, AMD red, Intel blue)</property>
+                            </object>
+                        </child>
                         <child type="suffix">
                             <object class="GtkColorDialogButton" id="color-button">
                                 <property name="valign">center</property>

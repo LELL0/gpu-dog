@@ -62,15 +62,38 @@ export default class GpuDogPreferences extends ExtensionPreferences {
 
 		const colorButton = this.#builder.get_object('color-button')
 		colorButton.set_dialog(new Gtk.ColorDialog({ withAlpha: false, modal: true }))
+		const colorAuto = this.#builder.get_object('color-auto')
+		const colorRow = this.#builder.get_object('color-row')
 		const loadColor = () => {
+			const setting = this.#settings.get_string(SettingsSchemaKeys.COLOR)
+			const auto = setting.trim() === ''
+			if (colorAuto.active !== auto)
+				colorAuto.active = auto
+			colorButton.sensitive = !auto
+			colorRow.subtitle = auto ? _('Auto: follows the busiest GPU') : ''
 			const rgba = new Gdk.RGBA()
-			if (rgba.parse(resolveColor(this.#settings.get_string(SettingsSchemaKeys.COLOR))) && !rgba.equal(colorButton.get_rgba()))
+			if (rgba.parse(resolveColor(setting)) && !rgba.equal(colorButton.get_rgba()))
 				colorButton.set_rgba(rgba)
 		}
 		loadColor()
 		const colorChangedId = this.#settings.connect(`changed::${SettingsSchemaKeys.COLOR}`, loadColor)
 		this.#window.connect('close-request', () => this.#settings?.disconnect(colorChangedId))
+		colorAuto.connect('notify::active', () => {
+			const auto = this.#settings.get_string(SettingsSchemaKeys.COLOR).trim() === ''
+			if (colorAuto.active === auto)
+				return
+			if (colorAuto.active) {
+				this.#settings.set_string(SettingsSchemaKeys.COLOR, '')
+			} else {
+				// turning auto off pins the color currently shown
+				const { red, green, blue } = colorButton.get_rgba()
+				this.#settings.set_string(SettingsSchemaKeys.COLOR,
+					'#' + [red, green, blue].map(c => Math.round(c * 255).toString(16).padStart(2, '0')).join(''))
+			}
+		})
 		colorButton.connect('notify::rgba', () => {
+			if (colorAuto.active)
+				return
 			const { red, green, blue } = colorButton.get_rgba()
 			const hex = '#' + [red, green, blue].map(c => Math.round(c * 255).toString(16).padStart(2, '0')).join('')
 			// showing the auto color must not pin it as a custom one
