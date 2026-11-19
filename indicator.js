@@ -38,6 +38,7 @@ export default class GpuDogIndicator extends PanelMenu.Button {
 	characterHandlerId
 	updateAnimationState = null
 	icon
+	gpuVendor = null
 
 	constructor(extension) {
 		super(0.5, 'GpuDog', false)
@@ -73,7 +74,13 @@ export default class GpuDogIndicator extends PanelMenu.Button {
 		const cpuDataProvider = createCpuGenerator()
 
 		const refresh = () => {
-			cpuDataProvider.next().then(({ value }) => { this.cpuUsage = value }, e => console.error(`${LOG_PREFIX}: ${e}`))
+			cpuDataProvider.next().then(({ value }) => {
+				this.cpuUsage = value.usage
+				if (value.vendor !== this.gpuVendor) {
+					this.gpuVendor = value.vendor
+					this.applyColor()
+				}
+			}, e => console.error(`${LOG_PREFIX}: ${e}`))
 
 			return GLib.SOURCE_CONTINUE
 		}
@@ -208,7 +215,7 @@ export default class GpuDogIndicator extends PanelMenu.Button {
 	}
 
 	applyColor() {
-		const color = resolveColor(this.settings.get_string(SettingsSchemaKeys.COLOR))
+		const color = resolveColor(this.settings.get_string(SettingsSchemaKeys.COLOR), this.gpuVendor)
 		this.icon?.set_style(`color: ${color};`)
 	}
 

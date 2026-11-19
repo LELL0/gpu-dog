@@ -82,4 +82,10 @@ export const getAutoColor = () => {
 	return detectedColor
 }
 
-export const resolveColor = setting => setting.replace(/[;{}]/g, '').trim() || getAutoColor()
+// Brand color of one PCI vendor id, or null when the vendor is unknown.
+export const getVendorColor = vendor => VENDOR_COLORS.find(([id]) => id === vendor)?.[1] ?? null
+
+// A non-empty setting always wins. Otherwise (auto) use the brand color of
+// `vendor` (the GPU currently shown), falling back to the system's preferred one.
+export const resolveColor = (setting, vendor = null) =>
+	setting.replace(/[;{}]/g, '').trim() || getVendorColor(vendor) || getAutoColor()

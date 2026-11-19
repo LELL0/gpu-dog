@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// GPU utilization reader shared by GPU Dog and the local Vitals patch.
+// GPU utilization reader shared by GPU Cat and the local Vitals patch.
 //
 // Supported sources (all unprivileged):
 //   Intel i915 : 1 - delta(gt0/rc6_residency_ms) / delta(t)
@@ -73,6 +73,7 @@ class Gpu {
 		this.prev = null
 		this.busy = false
 		this.last = null
+		this.lastTemp = null // degrees C, NVIDIA only (from the same nvidia-smi call)
 
 		if (vendor === '0x8086') {
 			for (const p of [
@@ -109,10 +110,11 @@ class Gpu {
 
 	// fraction 0..1, 'off', or null (no value yet / error)
 	async sample() {
-		if (!(await this.isAwake()))
+		if (!(await this.isAwake()) ||
+			!Gio.File.new_for_path(`${this.dev}/driver`).query_exists(null)) {
+			this.lastTemp = null
 			return 'off'
-		if (!Gio.File.new_for_path(`${this.dev}/driver`).query_exists(null))
-			return 'off'
+		}
 		try {
 			if (this.vendor === '0x8086')
 				return await this._sampleResidency()
@@ -143,11 +145,12 @@ class Gpu {
 		this.busy = true
 		try {
 			const proc = Gio.Subprocess.new(
-				['nvidia-smi', `--id=${this.pciBusId()}`, '--query-gpu=utilization.gpu', '--format=csv,noheader,nounits'],
+				['nvidia-smi', `--id=${this.pciBusId()}`, '--query-gpu=utilization.gpu,temperature.gpu', '--format=csv,noheader,nounits'],
 				Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_SILENCE)
 			const [out] = await proc.communicate_utf8_async(null, null)
-			const v = parseFloat(out)
-			this.last = Number.isFinite(v) ? clamp(v / 100) : null
+			const [util, temp] = out.split(',').map(x => parseFloat(x))
+			this.last = Number.isFinite(util) ? clamp(util / 100) : null
+			this.lastTemp = Number.isFinite(temp) ? temp : null
 			return this.last
 		} finally {
 			this.busy = false
@@ -198,10 +201,35 @@ export class GpuUsage {
 	igpu() { return this._group(true) }
 	dgpu() { return this._group(false) }
 
+	// Temperature (degrees C) seen by the last dgpu()/total() sample: highest
+	// among discrete GPUs, null if unknown or asleep.
+	// Never polls on its own, so it cannot wake a sleeping card.
+	dgpuTemp() {
+		const gpus = this.gpus.filter(g => !g.integrated)
+		const nums = gpus.map(g => g.lastTemp).filter(v => typeof v === 'number')
+		if (nums.length)
+			return Math.max(...nums)
+		return null
+	}
+
 	// max over all GPUs, 0..1 (sleeping GPUs count as 0)
 	async total() {
+		return (await this.busiest()).value
+	}
+
+	// The busiest GPU: { value: 0..1, vendor: PCI vendor id or null }.
+	// Sleeping GPUs count as 0. On a tie (e.g. everything idle) the
+	// integrated GPU wins, since it is the one driving the desktop.
+	async busiest() {
 		const vals = await Promise.all(this.gpus.map(g => g.sample()))
-		const nums = vals.filter(v => typeof v === 'number')
-		return nums.length ? Math.max(...nums) : 0
+		let best = null
+		vals.forEach((v, i) => {
+			const value = typeof v === 'number' ? v : 0
+			const gpu = this.gpus[i]
+			if (best === null || value > best.value ||
+				(value === best.value && gpu.integrated && !best.integrated))
+				best = { value, vendor: gpu.vendor, integrated: gpu.integrated }
+		})
+		return best ? { value: best.value, vendor: best.vendor } : { value: 0, vendor: null }
 	}
 }

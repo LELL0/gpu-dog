@@ -10,11 +10,13 @@ Fork of [GNOME RunCat](https://github.com/win0err/gnome-runcat) by Sergei Kolesn
 | Intel (i915) | `gt/gt0/rc6_residency_ms` (busy = 1 - idle residency / time) | no |
 | Intel (xe) | `device/tile0/gt0/gtidle/idle_residency_ms` | no |
 | AMD (amdgpu) | `device/gpu_busy_percent` | no |
-| NVIDIA (proprietary) | `nvidia-smi --query-gpu=utilization.gpu` | no |
+| NVIDIA (proprietary) | `nvidia-smi --query-gpu=utilization.gpu,temperature.gpu` | no |
 
-The cat follows the busiest GPU. A GPU whose `power/runtime_status` is not `active`
-is skipped and counted as idle, so on hybrid laptops polling never wakes a sleeping
-discrete GPU.
+The dog follows the busiest GPU and, unless a fixed color is set, takes that GPU's
+brand color (NVIDIA green, AMD red, Intel blue), so on hybrid laptops you can see
+which GPU it is showing. On a tie the integrated GPU wins. A GPU whose
+`power/runtime_status` is not `active` is skipped and counted as idle, so polling
+never wakes a sleeping discrete GPU.
 
 ## Install from source
 
